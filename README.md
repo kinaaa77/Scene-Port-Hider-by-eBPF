@@ -21,6 +21,8 @@ com.omarea.vtools
 
 不要直接拿别人设备构建出来的包乱刷。
 
+新版本模块会在安装时检查内核 BTF 指纹。如果模块包里的指纹和当前手机 `/sys/kernel/btf/vmlinux` 不一致，安装会被拒绝，避免刷错设备。
+
 ## 普通用户自助构建
 
 这条路线最简单：不需要自己安装 Android Studio、NDK、bpftool 或 libbpf，只需要 Fork 仓库，然后让 GitHub Actions 自动构建。
@@ -224,3 +226,9 @@ bash tools/build_for_connected_device.sh
 然后检查日志，确认是否是自己手机导出的 `vmlinux.btf` 构建出来的包。
 
 如果是从别人那里下载的预编译包，建议重新按上面的步骤自助构建。
+
+### 安装时报 Kernel BTF mismatch 是什么？
+
+说明这个模块不是用当前手机的 `/sys/kernel/btf/vmlinux` 构建出来的。
+
+请重新从当前手机导出 `vmlinux.btf`，上传到自己的 Fork，再跑一次 GitHub Actions。

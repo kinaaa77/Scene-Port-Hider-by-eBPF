@@ -24,6 +24,11 @@ The script:
 
 The user installs the zip in KernelSU Manager and reboots.
 
+`package.sh` writes `kernel_btf.sha256` into the module when `btf/vmlinux.btf`
+or `vmlinux.btf` is present. During installation, `customize.sh` compares that
+fingerprint with `/sys/kernel/btf/vmlinux` on the target phone and aborts on
+mismatch to prevent accidental installs on the wrong kernel.
+
 ## Fork and build with GitHub Actions
 
 This works when users do not want to install the Android NDK or build libbpf
