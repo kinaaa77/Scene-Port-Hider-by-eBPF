@@ -105,11 +105,8 @@ int hideport_bind_arm64_syscall(struct pt_regs *ctx)
 #endif
 
 SEC("lsm/task_alloc")
-int BPF_PROG(restrict_luna_fork, struct task_struct *task, unsigned long clone_flags, int ret)
+int BPF_PROG(restrict_luna_fork, struct task_struct *task, unsigned long clone_flags)
 {
-    if (ret != 0)
-        return ret;
-
     char comm[16];
     bpf_get_current_comm(&comm, sizeof(comm));
 
